@@ -1,1 +1,1 @@
-# SMA-tp5-reinforcement_learning_pacman
+# SMA TP5 : Markov Decision Process and Reinforcement Learning for playing Pacman
