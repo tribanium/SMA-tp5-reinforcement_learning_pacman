@@ -72,7 +72,7 @@ class ValueIterationAgent(ValueEstimationAgent):
         S = 0
 
         for destination, proba in probs_and_states:
-            value = self.getValue(destination) if self.getValue(destination) else 0
+            value = self.getValue(destination)
             transition_reward = self.mdp.getReward(state, action, destination)
             S += proba * (self.discount * value + transition_reward)
             return S
