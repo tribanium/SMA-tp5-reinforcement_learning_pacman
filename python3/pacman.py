@@ -1,11 +1,3 @@
-# pacman.py
-# ---------
-# Licensing Information: Please do not distribute or publish solutions to this
-# project. You are free to use and extend these projects for educational
-# purposes. The Pacman AI projects were developed at UC Berkeley, primarily by
-# John DeNero (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
-# For more info, see http://inst.eecs.berkeley.edu/~cs188/sp09/pacman.html
-
 """
 Pacman.py holds the logic for the classic pacman game along with the main
 code to run a game.  This file is divided into three sections:
@@ -80,7 +72,7 @@ class GameState:
         """
         Returns the legal actions for the agent specified.
         """
-        GameState.explored.add(self)
+        #        GameState.explored.add(self)
         if self.isWin() or self.isLose():
             return []
 
@@ -119,6 +111,8 @@ class GameState:
         # Book keeping
         state.data._agentMoved = agentIndex
         state.data.score += state.data.scoreChange
+        GameState.explored.add(self)
+        GameState.explored.add(state)
         return state
 
     def getLegalPacmanActions(self):
@@ -162,7 +156,7 @@ class GameState:
         return len(self.data.agentStates)
 
     def getScore(self):
-        return self.data.score
+        return float(self.data.score)
 
     def getCapsules(self):
         """
@@ -190,7 +184,7 @@ class GameState:
         Returns a Grid of boolean wall indicator variables.
 
         Grids can be accessed via list notation, so to check
-        if there is food at (x,y), just call
+        if there is a wall at (x,y), just call
 
         walls = state.getWalls()
         if walls[x][y] == True: ...
@@ -232,7 +226,7 @@ class GameState:
         """
         Allows two states to be compared.
         """
-        return self.data == other.data
+        return hasattr(other, "data") and self.data == other.data
 
     def __hash__(self):
         """
@@ -710,11 +704,11 @@ def readCommand(argv):
     # Special case: recorded games don't use the runGames method or args structure
     if options.gameToReplay != None:
         print("Replaying recorded game %s." % options.gameToReplay)
-        import pickle
+        import _pickle as cPickle
 
         f = open(options.gameToReplay)
         try:
-            recorded = pickle.load(f)
+            recorded = cPickle.load(f)
         finally:
             f.close()
         recorded["display"] = args["display"]
@@ -810,14 +804,15 @@ def runGames(
             games.append(game)
 
         if record:
-            import time, pickle
+            import time
+            import _pickle as cPickle
 
             fname = ("recorded-game-%d" % (i + 1)) + "-".join(
                 [str(t) for t in time.localtime()[1:6]]
             )
-            f = file(fname, "w")
+            f = open(fname, "w")
             components = {"layout": layout, "actions": game.moveHistory}
-            pickle.dump(components, f)
+            cPickle.dump(components, f)
             f.close()
 
     if (numGames - numTraining) > 0:
@@ -830,6 +825,16 @@ def runGames(
         print("Record:       ", ", ".join([["Loss", "Win"][int(w)] for w in wins]))
 
     return games
+
+
+def main(argstring):
+    argstring = argstring.lstrip("python ").lstrip("python3 ")
+    argstring = argstring.lstrip("pacman.py ")
+
+    args = readCommand(argstring.split())
+    runGames(**args)
+
+    pass
 
 
 if __name__ == "__main__":
