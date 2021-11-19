@@ -6,7 +6,7 @@ Master 2 IA - Université Lyon 1 - 2021-2022
 
 ___
 
-Project from Berkeley University initially in Python 2.7, I converted it to Python 3. Most of the codebase was already supplied, the goal of this project is to understand the code structure and to implement `valueIterationAgents.py`, `qlearningAgents.py` and `analysis.py`.
+Project from Berkeley University initially in Python 2.7, I converted it to Python 3. Most of the codebase was already supplied, the goal of this project is to understand the code structure and to implement `valueIterationAgents.py` and `qlearningAgents.py`.
 
 
 
