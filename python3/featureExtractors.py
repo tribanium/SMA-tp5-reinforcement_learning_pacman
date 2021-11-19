@@ -59,4 +59,37 @@ class SimpleExtractor(FeatureExtractor):
 
     def getFeatures(self, state, action):
         "*** YOUR CODE HERE ***"
-        return None
+
+        features = util.Counter()
+        features["bias"] = 1.0
+
+        # All states are located in the GameState class of pacman.py
+        ghosts_positions = state.getGhostPositions()
+        food_positions = state.getFood()
+        walls = state.getWalls()
+        current_pacman_position = state.getPacmanPosition()
+        next_state = state.generatePacmanSuccessor(action)
+        next_pacman_position = next_state.getPacmanPosition()
+
+        # Number of ghosts that can reach pacman in one step
+        for ghost_position in ghosts_positions:
+            possible_ghost_next_positions_list = Actions.getLegalNeighbors(
+                ghost_position, walls
+            )
+            for possible_ghost_next_position in possible_ghost_next_positions_list:
+                if possible_ghost_next_position == next_pacman_position:
+                    features["nb_ghosts_next_step"] += 1
+
+        # Check if there is food and no ghost on the next step
+        if (
+            food_positions[next_pacman_position[0]][next_pacman_position[1]]
+            and not features["nb_ghosts_next_step"]
+        ):
+            features["food_next_step"] = 1.0
+
+        # Computes the distance to the next pac-dot
+        dist = closestFood(next_pacman_position, food_positions, walls)
+        if dist:
+            features["food_distance"] = dist / (walls.width * walls.height)
+
+        return features
