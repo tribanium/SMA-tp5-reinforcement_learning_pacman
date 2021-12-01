@@ -12,6 +12,7 @@ import mdp
 import environment
 import util
 import optparse
+import time
 
 
 class Gridworld(mdp.MarkovDecisionProcess):
@@ -364,6 +365,7 @@ def runEpisode(
     if "startEpisode" in dir(agent):
         agent.startEpisode()
     message("BEGINNING EPISODE: " + str(episode) + "\n")
+
     while True:
 
         # DISPLAY CURRENT STATE
