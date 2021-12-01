@@ -72,17 +72,19 @@ Sans surprise, nous observons que l'agent choisit son action de façon aléatoir
 ## 3. Algorithme value iteration
 
 Nous souhaitons désormais implémenter un agent planifiant hors-ligne sa politique grâce à l'algorithme *value iteration* [Bellman, 1957], qui permet de calculer itérativement la fonction de valeur optimale suivant le schéma suivant :
-$$
-\forall s \in S,~ V_k(s) \leftarrow \max_{a\in A}\sum_{s'}T(s,a,s')[R(s,a,s')+\gamma V_{k-1}(s')]
-$$
+<img src="./screenshots/eq1.png" height="35">
+
 et que l'on répète jusqu'à convergence.
 
 
 
 La politique <img src="https://render.githubusercontent.com/render/math?math=\pi_k"> est extraite à partir de <img src="https://render.githubusercontent.com/render/math?math=\V_k">en calculant la politique gloutonne :
-$$
-\forall s \in S,~\pi_k(s) = \mathrm{arg}\max_{a\in A}\sum_{s' \in S}T(s,a,s')[R(s,a,s')+\gamma V_{k}(s')]
-$$
+
+
+
+<img src="./screenshots/eq2.png" height="35">
+
+
 
 #### *Question 1*
 
@@ -106,7 +108,7 @@ Maintenant que l'algorithme est fonctionnel, nous testons la planification sur d
 
 ### 4.1 BridgeGrid
 
-Nous utilisons d'abord le labyrinthe *BridgeGrid*. Nous effectuons une planification avec les paramètres par défaut dans un premier temps (`noise` = 0,2, `discount` = 0,9) : `python gridworld.py -a value -g BridgeGrid` et nous obtenons le résultat suivant :
+Nous utilisons d'abord le labyrinthe *BridgeGrid*. Nous effectuons une planification avec les paramètres par défaut dans un premier temps (`noise = 0.2`, ` discount = 0.9`) : `python gridworld.py -a value -g BridgeGrid` et nous obtenons le résultat suivant :
 
 <img src ="./screenshots/values_bridgegrid.png" height="500" />
 
@@ -130,19 +132,67 @@ Nous observons une amélioration dans le sens où les valeurs sont moins négati
 
 
 
-Modifions désormais le `noise` en gardant `discount` = 0,9 :
+Modifions désormais le `noise` en gardant `discount = 0.9` :
 
 Lorsque nous "ajoutons du déterminisme" à l'expérience (*i.e* `noise` -> 0 : le robot a plus de chances d'effectuer l'action désirée), nous obtenons une valeur seuil de `noise` à environ 1,6%, qui donne le résultat suivant :
 
 <img src ="./screenshots/values_bridgegrid_noise_0_16.png" height="500" />
 
-La politique optimale permet donc à l'agent de traverser le pont pour `noise` < 16% et `discount` = 0,9.
+La politique optimale permet donc à l'agent de traverser le pont pour `noise < 16%`  et `discount = 0.9`.
 
 ### 4.2 DiscountGrid
 
+Nous exécutons maintenant l'environnement *DiscountGrid*, qui est un labyrinthe présentant deux chemins permettant d'arriver à un état absorbant à récompense positive :
+
+- le premier est court mais risqué (chemin du bas) car proche d'états absorbants à récompenses négatives.
+- le second est plus sûr mais plus long (chemin passant par le haut du labyrinthe)
 
 
 
+#### *Question 2*
+
+Nous partons des valeurs initiales `discount = 0.9`, `noise = 0.2` et `livingReward = 0`. Nous cherchons à obtenir une politique optimale pour les cas suivants :
+
+
+
+1. Chemin risqué pour atteindre l'état absorbant de récompense +1 :
+
+Ici le `noise ` ne semble pas vraiment être le paramètre à changer. Comme l'état absorbant +1 est situé plus près de l'entrée du labyrinthe que le +10, il faut soit que le robot passe le moins de temps possible sur la labyrinthe (ce qui revient à mettre un `livingReward` négatif), soit que le robot ait un comportement "cigale" et ne prenne pas en compte les valeurs éloignées de son état afin de ne pas "voir" l'état absorbant de récompense +10 (`discount` qui tend vers 0). Toutefois, cette seconde option ne fonctionnera pas pour un chemin risqué puisque le malus des récompenses négatives orientera la politique de l'agent vers le chemin sûr dès le début, ce que nous avons vérifié par l'expérience.
+
+
+
+Nous testons donc le paramètre `livingReward` pour différentes valeurs négatives, et nous obtenons une politique optimale qui suit un chemin risqué pour aller à l'état absorbant de récompense +1 :
+
+<img src="./screenshots/discount_1_reward_3.png" height="500" />
+
+
+
+2. Chemin risqué pour atteindre l'état absorbant de récompense +10 :
+
+Pour atteindre l'état absorbant de récompense +10 en passant par le chemin risqué, le robot doit pouvoir "voir" la récompense au bout, changer le `discount` n'aurait donc pas beaucoup d'effet : nous le laissons à 0,9. Nous pourrions diminuer le `noise` mais nous nous retrouvons dans une situation similaire à la partie *BridgeGrid*, ainsi, nous obtenons une politique optimale satisfaisante pour un `noise` de 7% :
+
+<img src="./screenshots/discount_2_noise.png" height="500" />
+
+Nous pouvons également modifier la `livingReward` à -1 ce qui donne le résultat suivant :
+
+<img src="./screenshots/discount_2_livingreward.png" height="500" />
+
+
+
+3. Chemin sûr pour atteindre l'état absorbant de récompense +1
+
+Ici, nous devons faire en sorte que le robot ne prenne pas en compte l'état absorbant de récompense +10 pour arriver à celui de récompense  -1. Nous devons donc changer le `discount` que nous avons trouvé optimal pour une valeur de 0,3.
+
+<img src="./screenshots/discount_3_discount.png" height="500" />
+
+
+
+4. Chemin évitant les états absorbants
+
+Pour que le robot prenne ce chemin, il faut qu'il soit récompensé pour ne prendre aucun risque, et ne pas arriver à un état absorbant positif. Autrement dit, il faut qu'il soit récompensé pour rester en vie. C'est exactement le but de `livingReward` que nous fixons à 2 :
+
+<img src="./screenshots/discount_4_reward.png" height="500" />
 
 ## Conclusion
 
+Grâce à ce TP nous avons pu implémenter les briques essentielles à la résolution d'un problème de planification sous incertitudes au moyen d'un modèle MDP. Nous y avons notamment implémenté l'algorithme *value iteration* permettant de converger vers une solution de l'équation d'optimalité de Bellman et ainsi de trouver la politique optimale en fonction des paramètres. Nous avons également étudié l'influence de ces paramètres et les avons ajustés afin d'obtenir des politiques optimales dans plusieurs situations.
