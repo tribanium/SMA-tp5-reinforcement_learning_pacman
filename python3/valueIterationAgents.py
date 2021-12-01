@@ -40,14 +40,11 @@ class ValueIterationAgent(ValueEstimationAgent):
         self.values = util.Counter()  # A Counter is a dict with default 0
 
         "*** YOUR CODE HERE ***"
-        # on itère pour actualiser les valeurs
-        for iter in range(iterations):
+        for iter in range(self.iterations):
             temp_values = util.Counter()
-            for state in mdp.getStates():
+            for state in self.mdp.getStates():
                 action, score = self.getPolicy(state, get_score=True)
-                if not score:
-                    score = 0
-                temp_values[state] = score
+                temp_values[state] += score
             for state in temp_values:
                 self.values[state] = temp_values[state]
 
@@ -66,16 +63,18 @@ class ValueIterationAgent(ValueEstimationAgent):
         to derive it on the fly.
         """
         "*** YOUR CODE HERE ***"
-        probs_and_states = self.mdp.getTransitionStatesAndProbs(state, action)
+        transition_states_and_probs = self.mdp.getTransitionStatesAndProbs(
+            state, action
+        )
 
         # somme de la q-valeur
-        S = 0
+        qValue = 0
 
-        for destination, proba in probs_and_states:
-            value = self.getValue(destination)
-            transition_reward = self.mdp.getReward(state, action, destination)
-            S += proba * (self.discount * value + transition_reward)
-            return S
+        for next_state, proba in transition_states_and_probs:
+            value = self.getValue(next_state)
+            reward = self.mdp.getReward(state, action, next_state)
+            qValue += proba * (self.discount * value + reward)
+        return qValue
 
     def getPolicy(self, state, get_score=False):
         """
@@ -86,24 +85,18 @@ class ValueIterationAgent(ValueEstimationAgent):
         terminal state, you should return None.
         """
         "*** YOUR CODE HERE ***"
-        best_action = None
-        best_score = None
-
         if self.mdp.isTerminal(state):
             if get_score:
                 return None, 0
             return None
 
+        qValues = util.Counter()
+
         for action in self.mdp.getPossibleActions(state):
-            Qvalue = self.getQValue(state, action)
+            qValues[action] = self.getQValue(state, action)
 
-            if not best_score:
-                best_score = Qvalue
-                best_action = action
-
-            if Qvalue > best_score:
-                best_action = action
-                best_score = Qvalue
+        best_action = qValues.argMax()
+        best_score = qValues[best_action]
 
         if get_score:
             return best_action, best_score
