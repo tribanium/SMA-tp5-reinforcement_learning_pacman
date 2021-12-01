@@ -12,7 +12,7 @@ L'implémentation sera effectuée en Python
 
 Nous lançons le labyrinthe en mode manuel : `python gridworld.py -m`
 
-![](./screenshots/gridworld_manual.png)
+<img src="./screenshots/gridworld_manual.png" height="500" />
 
 L'agent est représenté par un cercle bleu, les états absorbants par un carré blanc contenant la valeur de récompense positive ou négative à l'intérieur, les murs sont les cases grises.
 
@@ -24,7 +24,7 @@ Par défaut, la valeur du bruit est de 20%, ce qui signifie que l'agent a 80% de
 
 
 
-Nous constatons ce comportement en mode manuel, lorsque nous déplçons l'agent avec les flèches de notre clavier.
+Nous constatons ce comportement en mode manuel, lorsque nous déplaçons l'agent avec les flèches de notre clavier.
 
 
 
@@ -36,9 +36,7 @@ Lorsque nous modifions le paramètre de bruit à 0 : `python gridworld.py -m --n
 
 Nous exécutons le labyritnthe avec un agent random `python gridworld.py` (random étant l'agent par défaut). Cet agent ne planifie pas, donc la valeur des états est constamment de 0. Nous observons ainsi l'agent se déplacer de façon complètement aléatoire sur la grille, jusqu'à arriver sur l'un des deux états absorbants.
 
-
-
-![](./screenshots/agent_random.gif)
+<img src="./screenshots/agent_random.gif" height="500" />
 
 
 
@@ -96,7 +94,7 @@ Nous complétons d'abord la classe `ValueIterationAgent` (dans le script du mêm
 
 Nous exécutons l'agent `value` implémenté à l'étape précédente. Nous obtenons les valeurs suivantes :
 
-![](./screenshots/values.png)
+<img src ="./screenshots/values.png" height="500" />
 
 Nous constatons que ces valeurs ne sont pas les mêmes que celles vues en cours. Cela est dû à une gestion différente des états absorbants par la codebase en python : dans notre cas, l'agent effectue un déplacement (fictif) supplémentaire vers une case `TERMINAL_STATE` contenant la récompense après avoir atteint la case <3,2> ou <3,1>.
 
@@ -110,7 +108,7 @@ Maintenant que l'algorithme est fonctionnel, nous testons la planification sur d
 
 Nous utilisons d'abord le labyrinthe *BridgeGrid*. Nous effectuons une planification avec les paramètres par défaut dans un premier temps (`noise` = 0,2, `discount` = 0,9) : `python gridworld.py -a value -g BridgeGrid` et nous obtenons le résultat suivant :
 
-![](/Users/paulflagel/Desktop/Master/SMA-tp5-reinforcement_learning_pacman/screenshots/values_bridgegrid.png)
+<img src ="./screenshots/values_bridgegrid.png" height="500" />
 
 Nous constatons que la politique optimale trouvée ici ne permet pas à l'agent de parcourir le pont. Ce qui est assez logique puisque l'agent n'a pas le droit à l'erreur s'il veut traverser le labyrinthe (un faux mouvement et il se retrouve dans un état absorbant), et les récompenses sont extrêmement négatives dans les états absorbants le long du chemin. L'agent a donc tout intérêt à rester à son point de départ où la récompense est de 1. 
 
@@ -124,7 +122,7 @@ Nous pouvons déjà intuiter que sur les deux paramètres `noise` et `discount`,
 
 Nous modifions d'abord le `discount` à 0,1 en gardant le `noise` par défaut à 0,2.
 
-![](./screenshots/values_bridgegrid_discount_0_1.png)
+<img src ="./screenshots/values_bridgegrid_discount_0_1.png" height="500" />
 
 
 
@@ -136,11 +134,9 @@ Modifions désormais le `noise` en gardant `discount` = 0,9 :
 
 Lorsque nous "ajoutons du déterminisme" à l'expérience (*i.e* `noise` -> 0 : le robot a plus de chances d'effectuer l'action désirée), nous obtenons une valeur seuil de `noise` à environ 1,6%, qui donne le résultat suivant :
 
-![](/Users/paulflagel/Desktop/Master/SMA-tp5-reinforcement_learning_pacman/screenshots/values_bridgegrid_noise_0_16.png)
+<img src ="./screenshots/values_bridgegrid_noise_0_16.png" height="500" />
 
 La politique optimale permet donc à l'agent de traverser le pont pour `noise` < 16% et `discount` = 0,9.
-
-
 
 ### 4.2 DiscountGrid
 
