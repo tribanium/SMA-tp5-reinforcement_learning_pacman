@@ -12,8 +12,9 @@ Project from Berkeley University initially in Python 2.7, I converted it to Pyth
 
 First, we will focus on a Markov Decision Process (MDP) and implement the value iteration algorithm, which computes values and q-values of each position of a maze with a reward on each cell.
 
+Results : [RAPPORT1.md](RAPPORT1.md)
 
+___
 
-## Get started
+Then, we will implement a qlearning agent and approximate features in order to train a reinforcement agent learning to play Pac-Man.
 
-`python gridworld.py -a value -i 1000 -k 10`
