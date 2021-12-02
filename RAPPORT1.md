@@ -34,7 +34,7 @@ Lorsque nous modifions le paramètre de bruit à 0 : `python gridworld.py -m --n
 
 ## 2. Agent aléatoire
 
-Nous exécutons le labyritnthe avec un agent random `python gridworld.py` (random étant l'agent par défaut). Cet agent ne planifie pas, donc la valeur des états est constamment de 0. Nous observons ainsi l'agent se déplacer de façon complètement aléatoire sur la grille, jusqu'à arriver sur l'un des deux états absorbants.
+Nous exécutons le labyrinthe avec un agent random `python gridworld.py` (random étant l'agent par défaut). Cet agent ne planifie pas, donc la valeur des états est constamment de 0. Nous observons ainsi l'agent se déplacer de façon complètement aléatoire sur la grille, jusqu'à arriver sur l'un des deux états absorbants.
 
 <img src="./screenshots/agent_random.gif" height="500" />
 
@@ -88,7 +88,7 @@ La politique <img src="https://render.githubusercontent.com/render/math?math=\pi
 
 #### *Question 1*
 
-Nous complétons d'abord la classe `ValueIterationAgent` (dans le script du même nom) en implémentant les méthodes `__init__` (qui effectue les itérationsde l'algorithme), `getValue`, `getQValue`, `getPolicy` et `getAction`.
+Nous complétons d'abord la classe `ValueIterationAgent` (dans le script du même nom) en implémentant les méthodes `__init__` (qui effectue les itérations de l'algorithme), `getValue`, `getQValue`, `getPolicy` et `getAction`.
 
 
 
@@ -138,7 +138,7 @@ Lorsque nous "ajoutons du déterminisme" à l'expérience (*i.e* `noise` -> 0 : 
 
 <img src ="./screenshots/values_bridgegrid_noise_0_16.png" height="500" />
 
-La politique optimale permet donc à l'agent de traverser le pont pour `noise < 16%`  et `discount = 0.9`.
+La politique optimale permet donc à l'agent de traverser le pont pour `noise < 1.6%`  et `discount = 0.9`.
 
 ### 4.2 DiscountGrid
 
