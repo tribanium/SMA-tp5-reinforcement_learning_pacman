@@ -208,7 +208,6 @@ class ApproximateQAgent(PacmanQAgent):
         alpha = self.alpha
         gamma = self.discount
         update = (reward + (gamma * next_value)) - self.getQValue(state, action)
-        # todo : Check why state and not next state in qvalue actualisation
         self.Qvalues[(state, action)] += alpha * update
         for feature in features.keys():
             self.weights[feature] += alpha * update * features[feature]

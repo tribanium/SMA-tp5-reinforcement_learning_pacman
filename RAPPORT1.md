@@ -106,7 +106,7 @@ Nous constatons que ces valeurs ne sont pas les mêmes que celles vues en cours.
 
 Maintenant que l'algorithme est fonctionnel, nous testons la planification sur d'aures environnements.
 
-### 4.1 BridgeGrid
+### 4.1. BridgeGrid
 
 Nous utilisons d'abord le labyrinthe *BridgeGrid*. Nous effectuons une planification avec les paramètres par défaut dans un premier temps (`noise = 0.2`, ` discount = 0.9`) : `python gridworld.py -a value -g BridgeGrid` et nous obtenons le résultat suivant :
 
@@ -140,7 +140,7 @@ Lorsque nous "ajoutons du déterminisme" à l'expérience (*i.e* `noise` -> 0 : 
 
 La politique optimale permet donc à l'agent de traverser le pont pour `noise < 1.6%`  et `discount = 0.9`.
 
-### 4.2 DiscountGrid
+### 4.2. DiscountGrid
 
 Nous exécutons maintenant l'environnement *DiscountGrid*, qui est un labyrinthe présentant deux chemins permettant d'arriver à un état absorbant à récompense positive :
 
