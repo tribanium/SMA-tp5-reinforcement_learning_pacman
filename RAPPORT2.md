@@ -35,7 +35,7 @@ On considère maintenant un robot composé d’un bras en deux parties. La parti
 
 Nous exécutons le crawler afin d'observer l'apprentissage : `python crawler.py`
 
-<img src="./screenshots/crawler.gif" height="400" />
+<img src="./screenshots/crawler.gif" height="200" />
 
 Nous avons la possibilité de modifier en temps réel les différents paramètres d'apprentissage : `discount, epsilon, learning rate`. Nous constatons par exemple qu'augmenter epsilon au début de l'apprentissage permet au robot de mieux cerner son environnement, et en le baissant au fur et à mesure, il suit de plus en plus précisément la politique optimale déterminée.
 
