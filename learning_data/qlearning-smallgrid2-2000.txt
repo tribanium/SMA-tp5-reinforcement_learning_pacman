@@ -1,0 +1,103 @@
+Beginning 2000 episodes of Training
+Reinforcement Learning Status:
+	Completed 100 out of 2000 training episodes
+	Average Rewards over all training: -515.90
+	Average Rewards for last 100 episodes: -515.90
+	Episode took 0.69 seconds
+Reinforcement Learning Status:
+	Completed 200 out of 2000 training episodes
+	Average Rewards over all training: -512.24
+	Average Rewards for last 100 episodes: -508.58
+	Episode took 0.72 seconds
+Reinforcement Learning Status:
+	Completed 300 out of 2000 training episodes
+	Average Rewards over all training: -499.39
+	Average Rewards for last 100 episodes: -473.70
+	Episode took 0.64 seconds
+Reinforcement Learning Status:
+	Completed 400 out of 2000 training episodes
+	Average Rewards over all training: -500.78
+	Average Rewards for last 100 episodes: -504.93
+	Episode took 0.66 seconds
+Reinforcement Learning Status:
+	Completed 500 out of 2000 training episodes
+	Average Rewards over all training: -501.96
+	Average Rewards for last 100 episodes: -506.67
+	Episode took 0.75 seconds
+Reinforcement Learning Status:
+	Completed 600 out of 2000 training episodes
+	Average Rewards over all training: -500.74
+	Average Rewards for last 100 episodes: -494.66
+	Episode took 0.73 seconds
+Reinforcement Learning Status:
+	Completed 700 out of 2000 training episodes
+	Average Rewards over all training: -499.64
+	Average Rewards for last 100 episodes: -493.01
+	Episode took 0.71 seconds
+Reinforcement Learning Status:
+	Completed 800 out of 2000 training episodes
+	Average Rewards over all training: -498.01
+	Average Rewards for last 100 episodes: -486.63
+	Episode took 0.71 seconds
+Reinforcement Learning Status:
+	Completed 900 out of 2000 training episodes
+	Average Rewards over all training: -496.82
+	Average Rewards for last 100 episodes: -487.32
+	Episode took 0.86 seconds
+Reinforcement Learning Status:
+	Completed 1000 out of 2000 training episodes
+	Average Rewards over all training: -496.49
+	Average Rewards for last 100 episodes: -493.52
+	Episode took 0.63 seconds
+Reinforcement Learning Status:
+	Completed 1100 out of 2000 training episodes
+	Average Rewards over all training: -492.90
+	Average Rewards for last 100 episodes: -457.00
+	Episode took 0.75 seconds
+Reinforcement Learning Status:
+	Completed 1200 out of 2000 training episodes
+	Average Rewards over all training: -490.57
+	Average Rewards for last 100 episodes: -464.91
+	Episode took 0.83 seconds
+Reinforcement Learning Status:
+	Completed 1300 out of 2000 training episodes
+	Average Rewards over all training: -487.95
+	Average Rewards for last 100 episodes: -456.52
+	Episode took 0.73 seconds
+Reinforcement Learning Status:
+	Completed 1400 out of 2000 training episodes
+	Average Rewards over all training: -489.24
+	Average Rewards for last 100 episodes: -506.06
+	Episode took 0.72 seconds
+Reinforcement Learning Status:
+	Completed 1500 out of 2000 training episodes
+	Average Rewards over all training: -489.02
+	Average Rewards for last 100 episodes: -485.84
+	Episode took 0.90 seconds
+Reinforcement Learning Status:
+	Completed 1600 out of 2000 training episodes
+	Average Rewards over all training: -488.77
+	Average Rewards for last 100 episodes: -485.05
+	Episode took 0.70 seconds
+Reinforcement Learning Status:
+	Completed 1700 out of 2000 training episodes
+	Average Rewards over all training: -487.47
+	Average Rewards for last 100 episodes: -466.65
+	Episode took 0.75 seconds
+Reinforcement Learning Status:
+	Completed 1800 out of 2000 training episodes
+	Average Rewards over all training: -486.81
+	Average Rewards for last 100 episodes: -475.59
+	Episode took 0.70 seconds
+Reinforcement Learning Status:
+	Completed 1900 out of 2000 training episodes
+	Average Rewards over all training: -487.82
+	Average Rewards for last 100 episodes: -506.06
+	Episode took 0.73 seconds
+Reinforcement Learning Status:
+	Completed 2000 out of 2000 training episodes
+	Average Rewards over all training: -485.18
+	Average Rewards for last 100 episodes: -434.92
+	Episode took 0.92 seconds
+Training Done (turning off epsilon and alpha)
+---------------------------------------------

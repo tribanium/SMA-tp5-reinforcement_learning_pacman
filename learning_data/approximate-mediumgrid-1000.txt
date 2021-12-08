@@ -1,0 +1,56 @@
+Beginning 1000 episodes of Training
+Reinforcement Learning Status:
+	Completed 100 out of 1000 training episodes
+	Average Rewards over all training: 650.08
+	Average Rewards for last 100 episodes: 650.08
+	Episode took 12.88 seconds
+Reinforcement Learning Status:
+	Completed 200 out of 1000 training episodes
+	Average Rewards over all training: 664.08
+	Average Rewards for last 100 episodes: 678.07
+	Episode took 13.64 seconds
+Reinforcement Learning Status:
+	Completed 300 out of 1000 training episodes
+	Average Rewards over all training: 628.89
+	Average Rewards for last 100 episodes: 558.52
+	Episode took 13.22 seconds
+Reinforcement Learning Status:
+	Completed 400 out of 1000 training episodes
+	Average Rewards over all training: 607.08
+	Average Rewards for last 100 episodes: 541.63
+	Episode took 13.02 seconds
+Reinforcement Learning Status:
+	Completed 500 out of 1000 training episodes
+	Average Rewards over all training: 598.57
+	Average Rewards for last 100 episodes: 564.55
+	Episode took 12.73 seconds
+Reinforcement Learning Status:
+	Completed 600 out of 1000 training episodes
+	Average Rewards over all training: 614.08
+	Average Rewards for last 100 episodes: 691.62
+	Episode took 14.20 seconds
+Reinforcement Learning Status:
+	Completed 700 out of 1000 training episodes
+	Average Rewards over all training: 632.10
+	Average Rewards for last 100 episodes: 740.26
+	Episode took 14.07 seconds
+Reinforcement Learning Status:
+	Completed 800 out of 1000 training episodes
+	Average Rewards over all training: 631.90
+	Average Rewards for last 100 episodes: 630.50
+	Episode took 14.13 seconds
+Reinforcement Learning Status:
+	Completed 900 out of 1000 training episodes
+	Average Rewards over all training: 630.35
+	Average Rewards for last 100 episodes: 617.96
+	Episode took 12.04 seconds
+Reinforcement Learning Status:
+	Completed 1000 out of 1000 training episodes
+	Average Rewards over all training: 630.41
+	Average Rewards for last 100 episodes: 630.89
+	Episode took 14.90 seconds
+Training Done (turning off epsilon and alpha)
+---------------------------------------------
+Pacman emerges victorious! Score: 1354
+Pacman died! Score: 185
+Pacman emerges victorious! Score: 1334

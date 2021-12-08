@@ -33,7 +33,7 @@ On considère maintenant un robot composé d’un bras en deux parties. La parti
 
 Nous exécutons le crawler afin d'observer l'apprentissage : `python crawler.py`
 
-<img src="./screenshots/crawler.gif" height="200" />
+<img src="./screenshots/crawler.gif" height="300" />
 
 Nous avons la possibilité de modifier en temps réel les différents paramètres d'apprentissage : `discount, epsilon, learning rate`. Nous constatons par exemple qu'augmenter epsilon au début de l'apprentissage permet au robot de mieux cerner son environnement, et en le baissant au fur et à mesure, il suit de plus en plus précisément la politique optimale déterminée.
 
@@ -60,13 +60,13 @@ Pour créer la table des q-valeurs de dimension `nb_etats * nb_actions`, le code
 Pour cela, le dictionnaire cherche si le couple (état, action) a déjà été appelé.
 Pour ce faire, un test `state == other_state` est effectué. Le test d'égalité de ces objets est défini dans la méthode `GameState.__eq__`. Cette méthode vérifie que l'ensemble des attributs susmentionnés sont égaux. Nous concluons que deux états similaires sont considérés comme différents ici, rendant la table des q-valeurs inutilement grande comme le montre la slide 77 du cours RL :
 
-<img src="./screenshots/matignon-pacman.png" height="200"/> 
+<img src="./screenshots/matignon-pacman.png" height="300"/> 
 
 Une manière de compresser ces états serait d'abord de comparer des positions relatives plutôt que des positions absolues. Nous pouvons prendre en compte uniquement la position de pacman, la distance entre pacman et le fantôme le plus proche (ou les deux fantômes les plus proches), leur direction, la position relative du pac-gomme le plus proche par rapport à Pac-Man.
 
 Toutefois, nous ne pouvons pas le faire ici, cela impliquerait de modifier la codebase en profondeur pour des résultats non-garantis.
 
-Nous testons le `PacmanQAgent` sur les layouts `smallGrid` et `smallGrid2` afin d'évaluer la performance du Q-learning :
+Nous testons le `PacmanQAgent` sur les layouts `smallGrid` et `smallGrid2` afin d'évaluer la performance du Q-learning, avec les paramètres `epsilon=0.05`, `gamma=0.8`, `alpha=0.2` :
 
 `python pacman.py -p PacmanQAgent -x 2000 -n 2010 -l smallGrid`
 
@@ -87,6 +87,10 @@ Nous observons ici que 2000 épisodes d'entraînement ne sont pas suffisants pou
 
 Nous réitérons avec 15000 épisodes d'entraînement pour `smallGrid2`. Nous observons cette fois-ci une politique plus satisfaisante, mais l'entraînement sur des grilles plus complexes semble compliqué dans des temps raisonnables.
 
+Nous traçons ici les courbes d'apprentissage des 3 expériences :
+
+<img src="./screenshots/learningcurves-qlearning.png" height="400">
+
 
 ### 2.3. Q-Learning et généralisation pour le jeu Pacman
 
@@ -95,13 +99,29 @@ Dans cette partie, l’objectif est d’améliorer les capacités de généralis
 Nious définissons des features qui permettent de calculer Q en effectuant la combinaison linéaire. Pour cela, nous implémentons la classe `ApproximateQAgent` de `qlearningAgents.py`, ainsi que la classe `SimpleExtractor` de `featureExtractors.py`.
 
 Les features sélectionnées sont les suivantes :
-- `bias` <img src="https://render.githubusercontent.com/render/math?math=f_0(s, a) = 1  \forall (a,s) \in A \times S">
+- `bias` <img src="https://render.githubusercontent.com/render/math?math=f_0(s, a) = 1,  \forall (a,s) \in A \times S">
 - `nb_ghosts_next_step` <img src="https://render.githubusercontent.com/render/math?math=f_1(s, a)"> : nombre de fantômes qui peuvent atteindre en un pas la position
 future du pacman (position atteinte par le pacman lorsqu’il fait a dans s)
 - `food_next_step` <img src="https://render.githubusercontent.com/render/math?math=f_2(s, a)"> : présence d’un pac-dot à la position future du pacman (position
 atteinte par le pacman lorsqu’il fait a dans s)
-- `food_distance` <img src="https://render.githubusercontent.com/render/math?math=dist(s, a)"> distance au plus proche pac-dot depuis la position future du
-pacman (position atteinte par le pacman lorsqu’il fait a dans s).
+- `food_distance` <img src="https://render.githubusercontent.com/render/math?math=f_3(s, a)">
 
+
+Avec *dist* la distance au plus proche pac-dot depuis la position future du
+pacman (position atteinte par le pacman lorsqu’il fait a dans s).
 <img src="https://render.githubusercontent.com/render/math?math=f_3(s, a) = \frac{dist(s,a)}{mapsize}">
 
+
+Nous testons l'agent sur la grille `smallGrid` et `smallGrid2` pour 50 épisodes d'entraînement (contre 2000 dans la partie précédente) et nous constatons que ceux-ci apprennent plutôt bien. Nous observons parfois que la descente de gradient atteint un minimum local, ce qui donne à l'agent des comportements assez statiques (il apprend juste à esquiver les fantômes).
+
+Nous testons ensuite notre agent sur la grille `mediumGrid` pour 1000 épisodes d'entraînement.
+
+<img src="./screenshots/pacman-approximate-mediumgrid-1000.gif" />
+
+Nous observons de très bonnes performances (bien meilleur que nous) avec les features définies plus haut.
+
+Nious traçons ici la courbe d'apprentissage de l'agent :
+
+<img src="./screenshots/learning_curves_approximate_mediumgrid_1000.png" height=400 >
+
+## Conclusion
