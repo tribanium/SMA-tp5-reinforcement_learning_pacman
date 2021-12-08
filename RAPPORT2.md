@@ -125,3 +125,5 @@ Nious traçons ici la courbe d'apprentissage de l'agent :
 <img src="./screenshots/learning_curves_approximate_mediumgrid_1000.png" height=400 >
 
 ## Conclusion
+
+Ce projet a été l'occasion de mettre en oeuvre le reinforcement learning dans un contexte ludique. Nous avons pu apprendre que sauf situation extrêmement simpliste, l'algorithme du Q-learning ne peut être appliqué pour apprendre naïvement à partir d'états bruts. Nous avons vu que le Q-Learning approximé permet justement d'apprendre des modèles très performants, en utilisant une représentation plus compacte des états et en reconstituant la fonction de QValue à partir de features relativement simples.
