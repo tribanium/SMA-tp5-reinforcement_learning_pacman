@@ -18,3 +18,5 @@ ___
 
 Then, we will implement a qlearning agent and approximate features in order to train a reinforcement agent learning to play Pac-Man.
 
+Results (in 🇫🇷) : [RAPPORT2.md](RAPPORT2.md)
+
