@@ -124,7 +124,7 @@ Nous testons ensuite notre agent sur la grille `mediumGrid` pour 1000 épisodes 
 
 Nous observons de très bonnes performances (bien meilleur que nous) avec les features définies plus haut.
 
-Nious traçons ici la courbe d'apprentissage de l'agent :
+Nous traçons ici la courbe d'apprentissage de l'agent :
 
 <img src="./screenshots/learning_curves_approximate_mediumgrid_1000.png" height=400 >
 
