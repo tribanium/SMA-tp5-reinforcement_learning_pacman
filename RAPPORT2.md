@@ -14,8 +14,6 @@ Nous complétons la classe `QLearningAgent` (notamment les méthodes `__init__, 
 
 <img src="./screenshots/qlearning-manuel.png" height="500" />
 
-Après quelques itérations, nous obtenons le résultat suivant. Nous avons fait en sorte que `getValue` et `getPolicy` accèdent aux Q-valeurs en appelant `getQValue` uniquement.
-
 
 
 ### 1.2. Agent avec stratégie d'exploration
@@ -51,4 +49,59 @@ Force est de constater que nous sommes assez mauvais.
 
 ### 2.2. Q-Learning tabulaire pour le jeu Pacman : comment définir les états du MDP ?
 
+
+Ici, les états du MDP sont déjà définis dans la classe `GameStateData` du fichier `game.py`. Les attributs d'un état sont :
+ - `food` : une grille de la taille du layout où sont stockées les positions de chaque pac-gommes. 
+ - `capsules` : une grille de la taille du layout où sont stockées les positions de chaque pac-dot. 
+ - `agentStates` : une liste d'objets agentState qui, pour chaque agent présent dans la partie (fantômes et pac-man) contient la position, la direction, et le `scaredTimer` si l'agent est un fantôme et que pacman a mangé une capsule.
+ - `score` : le score courant du joueur.
+  
+Pour créer la table des q-valeurs de dimension `nb_etats * nb_actions`, le code utilise un objet de type `counter`. Cet objet est un dictionnaire particulier qui, lorsqu'il est appelé avec un couple (état, action) inexistant, ne renvoie pas d'erreur (renvoie 0).
+Pour cela, le dictionnaire cherche si le couple (état, action) a déjà été appelé.
+Pour ce faire, un test `state == other_state` est effectué. Le test d'égalité de ces objets est défini dans la méthode `GameState.__eq__`. Cette méthode vérifie que l'ensemble des attributs susmentionnés sont égaux. Nous concluons que deux états similaires sont considérés comme différents ici, rendant la table des q-valeurs inutilement grande comme le montre la slide 77 du cours RL :
+
+<img src="./screenshots/matignon-pacman.png" height="200"/> 
+
+Une manière de compresser ces états serait d'abord de comparer des positions relatives plutôt que des positions absolues. Nous pouvons prendre en compte uniquement la position de pacman, la distance entre pacman et le fantôme le plus proche (ou les deux fantômes les plus proches), leur direction, la position relative du pac-gomme le plus proche par rapport à Pac-Man.
+
+Toutefois, nous ne pouvons pas le faire ici, cela impliquerait de modifier la codebase en profondeur pour des résultats non-garantis.
+
+Nous testons le `PacmanQAgent` sur les layouts `smallGrid` et `smallGrid2` afin d'évaluer la performance du Q-learning :
+
+`python pacman.py -p PacmanQAgent -x 2000 -n 2010 -l smallGrid`
+
+<img src="./screenshots/pacman-qagent-smallgrid-2000.gif" width="300"  />
+
+L'agent se débrouille correctement sur cette grille simpliste pour 2000 épisodes d'entraînement.
+
+`python pacman.py -p PacmanQAgent -x 2000 -n 2010 -l smallGrid2`
+
+<img src="./screenshots/pacman-qagent-smallgrid2-2000.gif" width="300"  />
+
+Nous observons ici que 2000 épisodes d'entraînement ne sont pas suffisants pour que Pacman adopte une politique gagnante, alors que la grille n'est pas beaucoup plus complexe. Ceci montre que le simple fait d'ajouter 1 pac-gomme, deux colonnes et de retirer 2 murs modifie drastiquement les performances d'apprentissage.
+
+`python pacman.py -p PacmanQAgent -x 15000 -n 15010 -l smallGrid`
+
+<img src="./screenshots/pacman-qagent-smallgrid2-15000.gif" width="300" />
+
+
+Nous réitérons avec 15000 épisodes d'entraînement pour `smallGrid2`. Nous observons cette fois-ci une politique plus satisfaisante, mais l'entraînement sur des grilles plus complexes semble compliqué dans des temps raisonnables.
+
+
 ### 2.3. Q-Learning et généralisation pour le jeu Pacman
+
+Dans cette partie, l’objectif est d’améliorer les capacités de généralisation entre états du Q-Learning, en utilisant une fonction d’approximation pour approximer la fonction Q. 
+
+Nious définissons des features qui permettent de calculer Q en effectuant la combinaison linéaire. Pour cela, nous implémentons la classe `ApproximateQAgent` de `qlearningAgents.py`, ainsi que la classe `SimpleExtractor` de `featureExtractors.py`.
+
+Les features sélectionnées sont les suivantes :
+- `bias` <img src="https://render.githubusercontent.com/render/math?math=f_0(s, a) = 1  \forall (a,s) \in A \times S">
+- `nb_ghosts_next_step` <img src="https://render.githubusercontent.com/render/math?math=f_1(s, a)"> : nombre de fantômes qui peuvent atteindre en un pas la position
+future du pacman (position atteinte par le pacman lorsqu’il fait a dans s)
+- `food_next_step` <img src="https://render.githubusercontent.com/render/math?math=f_2(s, a)"> : présence d’un pac-dot à la position future du pacman (position
+atteinte par le pacman lorsqu’il fait a dans s)
+- `food_distance` <img src="https://render.githubusercontent.com/render/math?math=dist(s, a)"> distance au plus proche pac-dot depuis la position future du
+pacman (position atteinte par le pacman lorsqu’il fait a dans s).
+
+<img src="https://render.githubusercontent.com/render/math?math=f_3(s, a) = \frac{dist(s,a)}{mapsize}">
+

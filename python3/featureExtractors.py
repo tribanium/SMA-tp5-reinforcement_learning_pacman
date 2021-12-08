@@ -67,7 +67,6 @@ class SimpleExtractor(FeatureExtractor):
         ghosts_positions = state.getGhostPositions()
         food_positions = state.getFood()
         walls = state.getWalls()
-        current_pacman_position = state.getPacmanPosition()
         next_state = state.generatePacmanSuccessor(action)
         next_pacman_position = next_state.getPacmanPosition()
 
