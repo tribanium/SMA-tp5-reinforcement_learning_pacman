@@ -114,7 +114,11 @@ pacman (position atteinte par le pacman lorsqu’il fait a dans s).
 
 Nous testons l'agent sur la grille `smallGrid` et `smallGrid2` pour 50 épisodes d'entraînement (contre 2000 dans la partie précédente) et nous constatons que ceux-ci apprennent plutôt bien. Nous observons parfois que la descente de gradient atteint un minimum local, ce qui donne à l'agent des comportements assez statiques (il apprend juste à esquiver les fantômes).
 
+`python pacman.py -p ApproximateQAgent -a extractor=SimpleExtractor -x 50 -n 60 -l mediumGrid`
+
 Nous testons ensuite notre agent sur la grille `mediumGrid` pour 1000 épisodes d'entraînement.
+
+`python pacman.py -p ApproximateQAgent -a extractor=SimpleExtractor -x 1000 -n 1010 -l mediumGrid`
 
 <img src="./screenshots/pacman-approximate-mediumgrid-1000.gif" />
 
