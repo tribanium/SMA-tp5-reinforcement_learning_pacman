@@ -8,6 +8,8 @@
 
 "Feature extractors for Pacman game states"
 
+from __future__ import division
+
 from game import Directions, Actions
 import util
 
